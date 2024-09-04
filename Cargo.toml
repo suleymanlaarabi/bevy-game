@@ -1,0 +1,19 @@
+[package]
+name = "bevygame"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+bevy = "*"
+bevy_framepace = "*"
+iyes_perf_ui = "*"
+serde = "*"
+serde_json = "*"
+
+# Enable a small amount of optimization in the dev profile.
+[profile.dev]
+opt-level = 2
+
+# Enable a large amount of optimization in the dev profile for dependencies.
+[profile.dev.package."*"]
+opt-level = 3
