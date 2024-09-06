@@ -6,20 +6,26 @@ use iyes_perf_ui::PerfUiPlugin;
 use plugin::animation::CustomAnimationPlugin;
 use plugin::movement::MovementPlugin;
 use plugin::player::PlayerPlugin;
-use setup_world::WorldPlugin;
+use plugin::world::WorldPlugin;
 
 mod core;
 mod plugin;
-mod maps;
-mod setup_world;
 
 fn main() {
     App::new()
         .add_plugins((
-            DefaultPlugins.set(ImagePlugin::default_nearest()),
+            DefaultPlugins
+            .set(ImagePlugin::default_nearest())
+            .set(WindowPlugin {
+                primary_window: Some(Window {
+                    title: "Bevy game".to_string(),
+                    ..default()
+                }),
+                ..default()
+            }),
             FrameTimeDiagnosticsPlugin,
             PerfUiPlugin,
-            WorldPlugin,
+            WorldPlugin::new("./assets/maps/map.json"),
             PlayerPlugin,
             MovementPlugin,
             CustomAnimationPlugin,
@@ -29,7 +35,6 @@ fn main() {
 }
 
 fn setup(mut commands: Commands) {
-    commands.spawn(Camera2dBundle::default());
     commands.spawn((
         PerfUiRoot {
             display_labels: false,
