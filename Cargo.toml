@@ -4,16 +4,27 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-bevy = "*"
-bevy_framepace = "*"
 iyes_perf_ui = "*"
-serde = "*"
+serde = "1.0.210"
 serde_json = "*"
+log = { version = "*", features = ["max_level_debug", "release_max_level_warn"] }
+bevy_rapier2d = "0.27.0"
+bevy = { version = "0.14.2"}
+bevy_tiled_plugin = {path = "../bevy_tiled_plugin/"}
 
-# Enable a small amount of optimization in the dev profile.
-[profile.dev]
-opt-level = 2
-
-# Enable a large amount of optimization in the dev profile for dependencies.
 [profile.dev.package."*"]
 opt-level = 3
+
+
+[profile.release]
+lto = true
+opt-level = 3
+codegen-units = 1
+incremental = false
+debug = false
+
+[profile.release.package."*"]
+opt-level = 3
+codegen-units = 1
+incremental = false
+debug = false
