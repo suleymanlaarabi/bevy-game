@@ -5,11 +5,11 @@ edition = "2021"
 
 [dependencies]
 iyes_perf_ui = "*"
-serde = "1.0.210"
+serde = "*"
 serde_json = "*"
 log = { version = "*", features = ["max_level_debug", "release_max_level_warn"] }
-bevy_rapier2d = "0.27.0"
-bevy = { version = "0.14.2"}
+bevy_rapier2d = "*"
+bevy = { version = "*"}
 bevy_tiled_plugin = {path = "../bevy_tiled_plugin/"}
 
 [profile.dev.package."*"]

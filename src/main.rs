@@ -1,14 +1,13 @@
-use bevy::app::{App, Startup};
-use bevy::diagnostic::FrameTimeDiagnosticsPlugin;
+use bevy::app::App;
 use bevy::prelude::*;
 use bevy::window::WindowResolution;
 use bevy_rapier2d::plugin::{NoUserData, RapierPhysicsPlugin};
-use bevy_rapier2d::prelude::*;
-use bevy_tiled_plugin::default_plugin::{TiledCollisionSize, TiledPlugin};
+
 use iyes_perf_ui::prelude::{PerfUiEntryFPS, PerfUiRoot};
-use iyes_perf_ui::PerfUiPlugin;
 use plugin::animation::CustomAnimationPlugin;
+use plugin::debug::DebugPlugin;
 use plugin::player::PlayerPlugin;
+use plugin::world::WorldPlugin;
 
 mod plugin;
 
@@ -25,34 +24,22 @@ fn main() {
                     }),
                     ..default()
                 }),
-            FrameTimeDiagnosticsPlugin,
-            PerfUiPlugin,
-            TiledPlugin::from_json(
-                "assets/maps/map.json",
-                "assets/maps/hills.json",
-                "maps/images/Hills.png",
-                4.,
-            )
-            .set_position(Vec2::new(600., -500.)),
+            WorldPlugin,
+            DebugPlugin,
             RapierPhysicsPlugin::<NoUserData>::pixels_per_meter(100.),
             PlayerPlugin,
             CustomAnimationPlugin,
         ))
-        .add_systems(Startup, setup)
-        .add_systems(PostStartup, spawn_collision)
+        .add_systems(PreStartup, setup)
         .run();
 }
 
-fn spawn_collision(mut commands: Commands, mut query: Query<(Entity, &TiledCollisionSize)>) {
-    for (entity, collision_size) in query.iter_mut() {
-        commands.entity(entity).insert((
-            RigidBody::Fixed,
-            Collider::cuboid(collision_size.x / 2., collision_size.y / 2.),
-        ));
-    }
-}
+#[derive(Resource, Deref, DerefMut)]
+pub struct FontResource(Handle<Font>);
 
-fn setup(mut commands: Commands) {
+fn setup(mut commands: Commands, server: Res<AssetServer>) {
+    let handle: Handle<Font> = server.load("arial.ttf");
+    commands.insert_resource(FontResource(handle));
     commands.spawn((
         PerfUiRoot {
             display_labels: false,

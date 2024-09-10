@@ -12,9 +12,9 @@ pub fn spawn_player(
             Player::new(controls),
             SpriteBundle {
                 texture: player_resource.player_sprite_image.clone(),
-                transform: Transform::from_xyz(50., PLAYER_Y_POS, 3.),
+                transform: Transform::from_xyz(350., PLAYER_Y_POS - 700., 3.),
                 sprite: Sprite {
-                    custom_size: Some(Vec2::new(150., 150.)),
+                    custom_size: Some(Vec2::new(250., 250.)),
                     ..default()
                 },
                 ..default()
@@ -26,9 +26,18 @@ pub fn spawn_player(
         ))
         .with_children(|children| {
             children.spawn((
-                Collider::cuboid(46., 50.),
-                Transform::from_xyz(0., -27., 0.),
+                Collider::capsule(Vec2::new(0., 66.), Vec2::new(0., -20.), 30.),
+                Transform::from_xyz(0., -80., 0.),
+                Friction {
+                    coefficient: 0.,
+                    combine_rule: CoefficientCombineRule::Min,
+                },
+            ));
+            children.spawn((
+                Collider::ball(10.),
+                Transform::from_xyz(0., -125., 0.),
                 ActiveEvents::COLLISION_EVENTS,
+                Sensor::default(),
             ));
         });
 }

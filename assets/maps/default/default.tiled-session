@@ -1,0 +1,52 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "default.tmx",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "fileStates": {
+        "Tiles.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1.3332,
+            "scaleInEditor": 1
+        },
+        "collision.tsx": {
+            "scaleInDock": 1.5,
+            "scaleInEditor": 1
+        },
+        "default.tmx": {
+            "scale": 1.2572,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 544.066178810054,
+                "y": 174.19662742602605
+            }
+        }
+    },
+    "last.exportedFilePath": "/home/suleyman/Principale/project/bevygame/assets/maps/default",
+    "last.imagePath": "/home/suleyman/Principale/project/bevygame/assets/maps/default/images",
+    "lastUsedTilesetExportFilter": "Fichiers de jeu de tuiles JSON (*.tsj *.json)",
+    "map.lastUsedExportFilter": "Fichiers de carte JSON (*.tmj *.json)",
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 16,
+    "map.tileWidth": 16,
+    "openFiles": [
+        "default.tmx",
+        "Tiles.tsx",
+        "collision.tsx"
+    ],
+    "project": "default.tiled-project",
+    "recentFiles": [
+        "collision.tsx",
+        "Tiles.tsx",
+        "default.tmx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 16,
+        "width": 16
+    }
+}

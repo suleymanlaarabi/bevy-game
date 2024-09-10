@@ -14,7 +14,7 @@ use systems::*;
 
 use super::animation::AnimationBundle;
 
-pub const PLAYER_SPEED: f32 = 300.0;
+pub const PLAYER_SPEED: f32 = 350.0;
 pub const PLAYER_Y_POS: f32 = 0.;
 pub const ATTACK_DURATION: f32 = 0.8;
 

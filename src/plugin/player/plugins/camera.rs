@@ -12,7 +12,9 @@ impl Plugin for CameraPlayerPlugin {
 }
 
 fn spawn_camera_player(mut commands: Commands) {
-    commands.spawn(Camera2dBundle::default());
+    let mut cam = Camera2dBundle::default();
+    cam.transform.scale = Vec3::splat(1.);
+    commands.spawn(cam);
 }
 
 fn camera_follow_player(

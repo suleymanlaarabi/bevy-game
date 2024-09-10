@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use bevy_rapier2d::prelude::*;
+use bevy_rapier2d::{prelude::*, rapier::prelude::CollisionEventFlags};
 
 use crate::plugin::player::{
     components::{Jump, Player},
@@ -7,10 +7,14 @@ use crate::plugin::player::{
 };
 
 pub fn handle_player_move(
-    mut query: Query<(&mut Player, &mut Sprite, &mut Transform, &mut Velocity)>,
+    mut query: Query<(&mut Player, &mut Sprite, &mut Velocity)>,
     keys: Res<ButtonInput<KeyCode>>,
 ) {
-    let (player, mut sprite, mut transform, mut velocity) = query.single_mut();
+    let (player, mut sprite, mut velocity) = query.single_mut();
+    velocity.linvel.x = 0.;
+    if player.is_shield {
+        return;
+    }
 
     if keys.pressed(player.controls.right) && !player.is_attack {
         velocity.linvel.x = PLAYER_SPEED;
@@ -20,7 +24,6 @@ pub fn handle_player_move(
         velocity.linvel.x = -PLAYER_SPEED;
         sprite.flip_x = true;
     }
-    transform.translation.y += 0.01;
 }
 
 pub fn check_jump(
@@ -44,11 +47,16 @@ pub fn check_jump(
 pub fn check_jump_end(
     mut commands: Commands,
     mut query: Query<(Entity, &mut Player), (With<Player>, With<Jump>)>,
+    colliders: Query<&Collider, With<Sensor>>,
     mut contact_events: EventReader<CollisionEvent>,
 ) {
     for (entity, mut player) in query.iter_mut() {
         for collision_event in contact_events.read() {
-            if let CollisionEvent::Started(_, _, _) = collision_event {
+            if let CollisionEvent::Started(_, h2, _) = collision_event {
+                let is_sensor = colliders.get(*h2).is_ok();
+                if is_sensor {
+                    continue;
+                }
                 player.is_jumping = false;
                 commands.entity(entity).remove::<Jump>();
             }

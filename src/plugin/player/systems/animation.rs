@@ -34,7 +34,7 @@ pub fn update_player_animation(
         set_animation((indices, timer), 8, 16, 0.1);
         return;
     }
-    if velocity.linvel.x <= -0.7 || velocity.linvel.x >= 0.7 {
+    if velocity.linvel.x <= -1.4 || velocity.linvel.x >= 1.4 {
         set_animation((indices, timer), 16, 23, 0.1);
     } else {
         set_animation((indices, timer), 0, 5, 0.1);
