@@ -28,12 +28,13 @@ pub fn spawn_ui_with_collision<F>(
                 Collider::cuboid(collision_size.x, collision_size.y),
                 GlobalTransform::from_xyz(collision_pos.x, collision_pos.y, 20.),
                 Sensor::default(),
+                ActiveEvents::COLLISION_EVENTS,
             ));
             spawn_children(children);
         });
 }
 
-fn detect_collision(
+pub fn detect_collision(
     mut child: Query<Entity, (With<Parent>, With<Collider>)>,
     mut parent: Query<&mut Visibility, With<CollisionUI>>,
     mut contact_events: EventReader<CollisionEvent>,

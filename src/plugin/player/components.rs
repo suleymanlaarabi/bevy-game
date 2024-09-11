@@ -13,6 +13,9 @@ pub struct Player {
     pub attack_clock: Timer,
     pub is_shield: bool,
 }
+#[derive(Component)]
+
+pub struct PlayerCollider;
 
 impl Player {
     pub fn new(controls: PlayerControls) -> Self {

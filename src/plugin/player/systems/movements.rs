@@ -1,8 +1,8 @@
 use bevy::prelude::*;
-use bevy_rapier2d::{prelude::*, rapier::prelude::CollisionEventFlags};
+use bevy_rapier2d::prelude::*;
 
 use crate::plugin::player::{
-    components::{Jump, Player},
+    components::{Jump, Player, PlayerCollider},
     PLAYER_SPEED,
 };
 
@@ -47,6 +47,7 @@ pub fn check_jump(
 pub fn check_jump_end(
     mut commands: Commands,
     mut query: Query<(Entity, &mut Player), (With<Player>, With<Jump>)>,
+    colliders_with_player: Query<&Collider, With<PlayerCollider>>,
     colliders: Query<&Collider, With<Sensor>>,
     mut contact_events: EventReader<CollisionEvent>,
 ) {
@@ -55,12 +56,15 @@ pub fn check_jump_end(
             if let CollisionEvent::Started(h1, h2, _) = collision_event {
                 let is_sensor1 = colliders.get(*h1).is_ok();
                 let is_sensor2 = colliders.get(*h2).is_ok();
-                println!("s1: {}, s2: {}", is_sensor1, is_sensor2);
                 if is_sensor1 && is_sensor2 {
                     continue;
                 }
-                player.is_jumping = false;
-                commands.entity(entity).remove::<Jump>();
+                let is_player1 = colliders_with_player.get(*h1).is_ok();
+                let is_player2 = colliders_with_player.get(*h2).is_ok();
+                if is_player1 || is_player2 {
+                    player.is_jumping = false;
+                    commands.entity(entity).remove::<Jump>();
+                }
             }
         }
     }

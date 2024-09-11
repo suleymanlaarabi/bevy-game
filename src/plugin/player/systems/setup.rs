@@ -1,4 +1,5 @@
 use bevy::prelude::*;
+use components::PlayerCollider;
 
 use crate::plugin::player::*;
 
@@ -38,6 +39,7 @@ pub fn spawn_player(
                 Transform::from_xyz(0., -110., 0.),
                 ActiveEvents::COLLISION_EVENTS,
                 Sensor::default(),
+                PlayerCollider,
             ));
         });
 }
