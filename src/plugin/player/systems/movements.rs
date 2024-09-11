@@ -52,9 +52,11 @@ pub fn check_jump_end(
 ) {
     for (entity, mut player) in query.iter_mut() {
         for collision_event in contact_events.read() {
-            if let CollisionEvent::Started(_, h2, _) = collision_event {
-                let is_sensor = colliders.get(*h2).is_ok();
-                if is_sensor {
+            if let CollisionEvent::Started(h1, h2, _) = collision_event {
+                let is_sensor1 = colliders.get(*h1).is_ok();
+                let is_sensor2 = colliders.get(*h2).is_ok();
+                println!("s1: {}, s2: {}", is_sensor1, is_sensor2);
+                if is_sensor1 && is_sensor2 {
                     continue;
                 }
                 player.is_jumping = false;

@@ -8,8 +8,7 @@ use super::components::{WorldInteract, WorldInteractSpawned, WorldInteractUI};
 
 pub fn spawn_objects(mut commands: Commands, mut query: Query<(Entity, &TiledObject)>) {
     for (entity, _) in query.iter_mut() {
-        println!("Spawn object");
-        let bundle = (
+        let bundle: (WorldInteract, Collider, Sensor, ActiveEvents) = (
             WorldInteract::new(KeyCode::KeyA, "Hello world"),
             Collider::cuboid(100., 100.),
             Sensor::default(),

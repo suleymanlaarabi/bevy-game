@@ -34,8 +34,8 @@ pub fn spawn_player(
                 },
             ));
             children.spawn((
-                Collider::ball(10.),
-                Transform::from_xyz(0., -125., 0.),
+                Collider::capsule(Vec2::new(0., 66.), Vec2::new(0., -20.), 10.),
+                Transform::from_xyz(0., -110., 0.),
                 ActiveEvents::COLLISION_EVENTS,
                 Sensor::default(),
             ));
