@@ -1,21 +1,16 @@
 use bevy::prelude::*;
 use bevy_rapier2d::prelude::*;
 use bevy_tiled_plugin::components::{TiledCollisionSize, TiledObject};
-
-use crate::{
-    plugin::{
-        collision_ui::{spawn_ui_with_collision, CollisionUIEvent},
-        controls::resources::ControlsResource,
-    },
-    ui::interact_rect,
-    FontResource,
-};
+use collision_event_plugin::{spawn_in_collision, CollisionAbsorberEvent};
+use controls_plugin::resources::ControlsResource;
+use shared_resource_plugin::FontResource;
+use ui_component::interact_rect;
 
 use super::components::{WorldInteract, WorldInteractIn};
 
 pub fn on_enter(
     query: Query<(Entity, &WorldInteract), With<WorldInteract>>,
-    mut ev_rd: EventReader<CollisionUIEvent>,
+    mut ev_rd: EventReader<CollisionAbsorberEvent>,
     mut commands: Commands,
 ) {
     for ev in ev_rd.read() {
@@ -47,7 +42,7 @@ pub fn spawn_objects(
     font: Res<FontResource>,
 ) {
     for object in query.iter_mut() {
-        spawn_ui_with_collision(
+        spawn_in_collision(
             &mut commands,
             Vec2::new(object.position.x, object.position.y),
             Vec2::splat(100.),
@@ -68,9 +63,9 @@ pub fn spawn_objects(
 
 pub fn spawn_collision(mut commands: Commands, mut query: Query<(Entity, &TiledCollisionSize)>) {
     for (entity, collision_size) in query.iter_mut() {
-        commands.entity(entity).insert((
-            Collider::cuboid(collision_size.x / 2., collision_size.y / 2.),
-            Friction::coefficient(0.),
-        ));
+        commands.entity(entity).insert((Collider::cuboid(
+            collision_size.x / 2.,
+            collision_size.y / 2.,
+        ),));
     }
 }

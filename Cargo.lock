@@ -179,6 +179,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "animation_plugin"
+version = "0.1.0"
+dependencies = [
+ "bevy",
+]
+
+[[package]]
 name = "approx"
 version = "0.5.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1156,13 +1163,19 @@ dependencies = [
 name = "bevygame"
 version = "0.1.0"
 dependencies = [
+ "animation_plugin",
  "bevy",
  "bevy_rapier2d",
  "bevy_tiled_plugin",
+ "collision_event_plugin",
+ "controls_plugin",
  "iyes_perf_ui",
  "log",
+ "player_plugin",
  "serde",
  "serde_json",
+ "shared_resource_plugin",
+ "world_plugin",
 ]
 
 [[package]]
@@ -1380,6 +1393,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "collision_event_plugin"
+version = "0.1.0"
+dependencies = [
+ "bevy",
+ "bevy_rapier2d",
+]
+
+[[package]]
 name = "com"
 version = "0.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1470,6 +1491,13 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e1aaf9b65849a68662ac6c0810c8893a765c960b907dd7cfab9c4a50bf764fbc"
 dependencies = [
  "const_soft_float",
+]
+
+[[package]]
+name = "controls_plugin"
+version = "0.1.0"
+dependencies = [
+ "bevy",
 ]
 
 [[package]]
@@ -3149,6 +3177,16 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d231b230927b5e4ad203db57bbcbee2802f6bce620b1e4a9024a07d94e2907ec"
 
 [[package]]
+name = "player_plugin"
+version = "0.1.0"
+dependencies = [
+ "animation_plugin",
+ "bevy",
+ "bevy_rapier2d",
+ "controls_plugin",
+]
+
+[[package]]
 name = "png"
 version = "0.17.13"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3502,6 +3540,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "shared_resource_plugin"
+version = "0.1.0"
+dependencies = [
+ "bevy",
+]
+
+[[package]]
 name = "shlex"
 version = "1.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3811,6 +3856,13 @@ name = "typenum"
 version = "1.17.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "42ff0bf0c66b8238c6f3b578df37d0b7848e55df8577b3f74f92a69acceeb825"
+
+[[package]]
+name = "ui_component"
+version = "0.1.0"
+dependencies = [
+ "bevy",
+]
 
 [[package]]
 name = "unicode-ident"
@@ -4515,6 +4567,19 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "68a9bda4691f099d435ad181000724da8e5899daa10713c2d432552b9ccd3a6f"
 dependencies = [
  "memchr",
+]
+
+[[package]]
+name = "world_plugin"
+version = "0.1.0"
+dependencies = [
+ "bevy",
+ "bevy_rapier2d",
+ "bevy_tiled_plugin",
+ "collision_event_plugin",
+ "controls_plugin",
+ "shared_resource_plugin",
+ "ui_component",
 ]
 
 [[package]]

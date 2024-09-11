@@ -11,6 +11,12 @@ log = { version = "*", features = ["max_level_debug", "release_max_level_warn"] 
 bevy_rapier2d = "*"
 bevy = { version = "*"}
 bevy_tiled_plugin = {path = "../bevy_tiled_plugin/"}
+player_plugin = {path = "crates/player_plugin/"}
+animation_plugin = {path = "crates/animation_plugin/"}
+controls_plugin = {path = "crates/controls_plugin/"}
+world_plugin = {path = "crates/world_plugin/"}
+collision_event_plugin = {path = "crates/collision_event_plugin/"}
+shared_resource_plugin = { path = "crates/shared_resource_plugin/"}
 
 [profile.dev.package."*"]
 opt-level = 3

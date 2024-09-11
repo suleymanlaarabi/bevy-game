@@ -32,8 +32,8 @@ pub fn spawn_player(commands: &mut Commands, player_resource: &Res<PlayerResourc
                 },
             ));
             children.spawn((
-                Collider::capsule(Vec2::new(0., 66.), Vec2::new(0., -20.), 10.),
-                Transform::from_xyz(0., -110., 0.),
+                Collider::cuboid(10., 20.),
+                Transform::from_xyz(0., -115., 0.),
                 ActiveEvents::COLLISION_EVENTS,
                 Sensor::default(),
                 PlayerCollider,

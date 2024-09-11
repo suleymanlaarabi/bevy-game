@@ -1,14 +1,13 @@
-mod components;
-mod systems;
+pub mod components;
+pub mod systems;
 
 use bevy::{
     app::{Plugin, PostStartup, Update},
     prelude::IntoSystemConfigs,
 };
 use bevy_tiled_plugin::default_plugin::TiledPlugin;
+use collision_event_plugin::detect_collision;
 use systems::{in_enter, on_enter, spawn_collision, spawn_objects};
-
-use super::collision_ui::detect_collision;
 
 pub struct WorldPlugin;
 

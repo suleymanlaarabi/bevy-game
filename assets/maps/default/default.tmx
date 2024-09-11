@@ -3,6 +3,9 @@
  <editorsettings>
   <export target="map.json" format="json"/>
  </editorsettings>
+ <properties>
+  <property name="background" value="background.png"/>
+ </properties>
  <tileset firstgid="1" source="Tiles.tsx"/>
  <tileset firstgid="626" source="collision.tsx"/>
  <layer id="4" name="background" width="74" height="20">

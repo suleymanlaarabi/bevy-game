@@ -1,18 +1,19 @@
+use animation_plugin::CustomAnimationPlugin;
 use bevy::app::App;
 use bevy::prelude::*;
 use bevy::window::WindowResolution;
 use bevy_rapier2d::plugin::*;
 
+use collision_event_plugin::CollisionEventPlugin;
+use controls_plugin::ControlsPlugin;
 use iyes_perf_ui::prelude::{PerfUiEntryFPS, PerfUiRoot};
-use plugin::animation::CustomAnimationPlugin;
-use plugin::collision_ui::CollisionUIPlugin;
-use plugin::controls::ControlsPlugin;
-use plugin::player::PlayerPlugin;
+use player_plugin::PlayerPlugin;
+use plugin::debug::DebugPlugin;
 use plugin::props::PropsPlugin;
-use plugin::world::WorldPlugin;
+use shared_resource_plugin::SharedResourcePlugin;
+use world_plugin::WorldPlugin;
 
 mod plugin;
-mod ui;
 
 fn main() {
     App::new()
@@ -27,11 +28,17 @@ fn main() {
                     }),
                     ..default()
                 }),
+            SharedResourcePlugin,
             ControlsPlugin,
             PropsPlugin,
+            DebugPlugin {
+                frame: true,
+                collider: false,
+                ..default()
+            },
             RapierPhysicsPlugin::<NoUserData>::pixels_per_meter(100.),
             WorldPlugin,
-            CollisionUIPlugin,
+            CollisionEventPlugin,
             PlayerPlugin,
             CustomAnimationPlugin,
         ))
@@ -39,11 +46,7 @@ fn main() {
         .run();
 }
 
-#[derive(Resource, Deref, DerefMut)]
-pub struct FontResource(Handle<Font>);
-
-fn setup(mut commands: Commands, server: Res<AssetServer>) {
-    commands.insert_resource(FontResource(server.load("arial.ttf")));
+fn setup(mut commands: Commands) {
     commands.spawn((
         PerfUiRoot {
             display_labels: false,

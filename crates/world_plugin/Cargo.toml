@@ -1,0 +1,13 @@
+[package]
+name = "world_plugin"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+bevy = "*"
+bevy_tiled_plugin ={ path = "../../../bevy_tiled_plugin/"}
+bevy_rapier2d = "*"
+collision_event_plugin = {path = "../collision_event_plugin/"}
+controls_plugin ={ path = "../controls_plugin/"}
+shared_resource_plugin ={ path = "../shared_resource_plugin/"}
+ui_component = {path = "../ui_component/"}
