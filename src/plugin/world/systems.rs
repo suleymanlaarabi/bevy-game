@@ -51,7 +51,7 @@ pub fn spawn_objects(
             &mut commands,
             Vec2::new(object.position.x, object.position.y),
             Vec2::splat(100.),
-            (WorldInteract::new(KeyCode::KeyE, "coucou"), interact_rect()),
+            (WorldInteract, interact_rect()),
             |children| {
                 children.spawn(TextBundle::from_section(
                     "interact E",

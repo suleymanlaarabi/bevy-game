@@ -1,9 +1,14 @@
 mod components;
 mod systems;
 
-use bevy::app::{Plugin, PostStartup, Update};
+use bevy::{
+    app::{Plugin, PostStartup, Update},
+    prelude::IntoSystemConfigs,
+};
 use bevy_tiled_plugin::default_plugin::TiledPlugin;
 use systems::{in_enter, on_enter, spawn_collision, spawn_objects};
+
+use super::collision_ui::detect_collision;
 
 pub struct WorldPlugin;
 
@@ -16,6 +21,6 @@ impl Plugin for WorldPlugin {
             4.,
         ))
         .add_systems(PostStartup, (spawn_objects, spawn_collision))
-        .add_systems(Update, (on_enter, in_enter));
+        .add_systems(Update, (on_enter.after(detect_collision), in_enter));
     }
 }

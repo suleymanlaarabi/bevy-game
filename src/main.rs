@@ -7,8 +7,8 @@ use iyes_perf_ui::prelude::{PerfUiEntryFPS, PerfUiRoot};
 use plugin::animation::CustomAnimationPlugin;
 use plugin::collision_ui::CollisionUIPlugin;
 use plugin::controls::ControlsPlugin;
-use plugin::debug::DebugPlugin;
 use plugin::player::PlayerPlugin;
+use plugin::props::PropsPlugin;
 use plugin::world::WorldPlugin;
 
 mod plugin;
@@ -28,6 +28,7 @@ fn main() {
                     ..default()
                 }),
             ControlsPlugin,
+            PropsPlugin,
             RapierPhysicsPlugin::<NoUserData>::pixels_per_meter(100.),
             WorldPlugin,
             CollisionUIPlugin,
@@ -42,9 +43,7 @@ fn main() {
 pub struct FontResource(Handle<Font>);
 
 fn setup(mut commands: Commands, server: Res<AssetServer>) {
-    let handle: &Handle<Font> = &server.load("arial.ttf");
-
-    commands.insert_resource(FontResource(handle.to_owned()));
+    commands.insert_resource(FontResource(server.load("arial.ttf")));
     commands.spawn((
         PerfUiRoot {
             display_labels: false,
