@@ -2,46 +2,56 @@ use bevy::prelude::*;
 use bevy_rapier2d::prelude::*;
 use bevy_tiled_plugin::components::{TiledCollisionSize, TiledObject};
 
-use crate::{plugin::collision_ui::spawn_ui_with_collision, FontResource};
+use crate::{
+    plugin::{
+        collision_ui::{spawn_ui_with_collision, CollisionUIEvent},
+        controls::resources::ControlsResource,
+    },
+    ui::interact_rect,
+    FontResource,
+};
+
+use super::components::{WorldInteract, WorldInteractIn};
+
+pub fn on_enter(
+    query: Query<(Entity, &WorldInteract), With<WorldInteract>>,
+    mut ev_rd: EventReader<CollisionUIEvent>,
+    mut commands: Commands,
+) {
+    for ev in ev_rd.read() {
+        if let Ok((entity, _)) = query.get(ev.entity) {
+            if !ev.is_exit {
+                commands.entity(entity).insert(WorldInteractIn);
+            } else {
+                commands.entity(entity).remove::<WorldInteractIn>();
+            }
+        }
+    }
+}
+
+pub fn in_enter(
+    query: Query<Entity, With<WorldInteractIn>>,
+    controls: Res<ControlsResource>,
+    keys: Res<ButtonInput<KeyCode>>,
+) {
+    query.iter().for_each(|_| {
+        if keys.just_pressed(controls.interact) {
+            println!("interact");
+        }
+    })
+}
 
 pub fn spawn_objects(
     mut commands: Commands,
-    mut query: Query<(Entity, &TiledObject)>,
+    mut query: Query<&TiledObject>,
     font: Res<FontResource>,
 ) {
-    for (entity, object) in query.iter_mut() {
+    for object in query.iter_mut() {
         spawn_ui_with_collision(
             &mut commands,
             Vec2::new(object.position.x, object.position.y),
             Vec2::splat(100.),
-            NodeBundle {
-                background_color: BackgroundColor(Color::srgba(10., 10., 10., 0.08)),
-                style: Style {
-                    width: Val::Px(200.),
-                    height: Val::Px(60.),
-                    justify_self: JustifySelf::Center,
-                    align_self: AlignSelf::FlexEnd,
-                    justify_content: JustifyContent::Center,
-                    align_items: AlignItems::Center,
-                    align_content: AlignContent::Center,
-                    margin: UiRect {
-                        left: Val::Px(0.),
-                        right: Val::Px(0.),
-                        top: Val::Px(0.),
-                        bottom: Val::Px(50.),
-                    },
-                    border: UiRect {
-                        left: Val::Px(1.),
-                        right: Val::Px(1.),
-                        top: Val::Px(1.),
-                        bottom: Val::Px(1.),
-                    },
-                    ..default()
-                },
-                visibility: Visibility::Hidden,
-                border_radius: BorderRadius::all(Val::Px(10.)),
-                ..default()
-            },
+            (WorldInteract::new(KeyCode::KeyE, "coucou"), interact_rect()),
             |children| {
                 children.spawn(TextBundle::from_section(
                     "interact E",

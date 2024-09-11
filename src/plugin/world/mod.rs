@@ -1,9 +1,9 @@
 mod components;
 mod systems;
 
-use bevy::app::{Plugin, PostStartup};
+use bevy::app::{Plugin, PostStartup, Update};
 use bevy_tiled_plugin::default_plugin::TiledPlugin;
-use systems::{spawn_collision, spawn_objects};
+use systems::{in_enter, on_enter, spawn_collision, spawn_objects};
 
 pub struct WorldPlugin;
 
@@ -15,6 +15,7 @@ impl Plugin for WorldPlugin {
             "maps/default/images/Tiles.png",
             4.,
         ))
-        .add_systems(PostStartup, (spawn_objects, spawn_collision));
+        .add_systems(PostStartup, (spawn_objects, spawn_collision))
+        .add_systems(Update, (on_enter, in_enter));
     }
 }

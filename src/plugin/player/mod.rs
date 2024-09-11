@@ -1,5 +1,4 @@
 mod components;
-mod controls;
 mod plugins;
 mod resources;
 mod systems;
@@ -7,7 +6,6 @@ mod systems;
 use bevy::prelude::*;
 use bevy_rapier2d::prelude::*;
 use components::Player;
-use controls::PlayerControls;
 use plugins::camera::CameraPlayerPlugin;
 use resources::PlayerResource;
 use systems::*;

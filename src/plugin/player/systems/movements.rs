@@ -1,14 +1,18 @@
 use bevy::prelude::*;
 use bevy_rapier2d::prelude::*;
 
-use crate::plugin::player::{
-    components::{Jump, Player, PlayerCollider},
-    PLAYER_SPEED,
+use crate::plugin::{
+    controls::resources::ControlsResource,
+    player::{
+        components::{Jump, Player, PlayerCollider},
+        PLAYER_SPEED,
+    },
 };
 
 pub fn handle_player_move(
     mut query: Query<(&mut Player, &mut Sprite, &mut Velocity)>,
     keys: Res<ButtonInput<KeyCode>>,
+    controls: Res<ControlsResource>,
 ) {
     let (player, mut sprite, mut velocity) = query.single_mut();
     velocity.linvel.x = 0.;
@@ -16,11 +20,11 @@ pub fn handle_player_move(
         return;
     }
 
-    if keys.pressed(player.controls.right) && !player.is_attack {
+    if keys.pressed(controls.move_right) && !player.is_attack {
         velocity.linvel.x = PLAYER_SPEED;
         sprite.flip_x = false;
     }
-    if keys.pressed(player.controls.left) && !player.is_attack {
+    if keys.pressed(controls.move_left) && !player.is_attack {
         velocity.linvel.x = -PLAYER_SPEED;
         sprite.flip_x = true;
     }
@@ -30,6 +34,7 @@ pub fn check_jump(
     keys: Res<ButtonInput<KeyCode>>,
     mut commands: Commands,
     mut query: Query<(Entity, &mut Player, &mut Velocity), (With<Player>, Without<Jump>)>,
+    controls: Res<ControlsResource>,
 ) {
     if query.is_empty() {
         return;
@@ -37,7 +42,7 @@ pub fn check_jump(
 
     let (entity, mut player, mut velocity) = query.single_mut();
 
-    if !player.is_shield && keys.pressed(player.controls.jump) {
+    if !player.is_shield && keys.pressed(controls.move_up) {
         player.is_jumping = true;
         commands.entity(entity).insert(Jump);
         velocity.linvel.y = 450.;

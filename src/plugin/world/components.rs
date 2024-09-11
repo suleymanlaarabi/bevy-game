@@ -4,7 +4,7 @@ use bevy::prelude::*;
 pub struct WorldInteractSpawned;
 
 #[derive(Component)]
-pub struct WorldInteractUI;
+pub struct WorldInteractIn;
 
 #[derive(Component)]
 pub struct WorldInteract {

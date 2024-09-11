@@ -3,10 +3,10 @@ use bevy::prelude::*;
 use bevy::window::WindowResolution;
 use bevy_rapier2d::plugin::*;
 
-use bevy_rapier2d::prelude::{ActiveEvents, Collider, CollisionEvent, Sensor};
 use iyes_perf_ui::prelude::{PerfUiEntryFPS, PerfUiRoot};
 use plugin::animation::CustomAnimationPlugin;
-use plugin::collision_ui::{spawn_ui_with_collision, CollisionUI, CollisionUIPlugin};
+use plugin::collision_ui::CollisionUIPlugin;
+use plugin::controls::ControlsPlugin;
 use plugin::debug::DebugPlugin;
 use plugin::player::PlayerPlugin;
 use plugin::world::WorldPlugin;
@@ -27,6 +27,7 @@ fn main() {
                     }),
                     ..default()
                 }),
+            ControlsPlugin,
             RapierPhysicsPlugin::<NoUserData>::pixels_per_meter(100.),
             WorldPlugin,
             CollisionUIPlugin,

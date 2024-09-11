@@ -3,17 +3,13 @@ use components::PlayerCollider;
 
 use crate::plugin::player::*;
 
-pub fn spawn_player(
-    commands: &mut Commands,
-    player_resource: &Res<PlayerResource>,
-    controls: PlayerControls,
-) {
+pub fn spawn_player(commands: &mut Commands, player_resource: &Res<PlayerResource>) {
     commands
         .spawn((
-            Player::new(controls),
+            Player::new(),
             SpriteBundle {
                 texture: player_resource.player_sprite_image.clone(),
-                transform: Transform::from_xyz(350., PLAYER_Y_POS - 700., 3.),
+                transform: Transform::from_xyz(1050., PLAYER_Y_POS - 700., 3.),
                 sprite: Sprite {
                     custom_size: Some(Vec2::new(250., 250.)),
                     ..default()
@@ -45,17 +41,7 @@ pub fn spawn_player(
 }
 
 pub fn setup_players(mut commands: Commands, player_resource: Res<PlayerResource>) {
-    spawn_player(
-        &mut commands,
-        &player_resource,
-        PlayerControls::new(
-            KeyCode::KeyA,
-            KeyCode::KeyD,
-            KeyCode::KeyW,
-            KeyCode::KeyN,
-            KeyCode::KeyB,
-        ),
-    );
+    spawn_player(&mut commands, &player_resource);
 }
 
 pub fn init_resource(mut commands: Commands, asset_server: Res<AssetServer>) {
