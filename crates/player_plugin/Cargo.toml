@@ -1,0 +1,10 @@
+[package]
+name = "player_plugin"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+bevy = "*"
+bevy_rapier2d = "*"
+animation_plugin = {path = "../animation_plugin/"}
+controls_plugin ={ path = "../controls_plugin/"}
