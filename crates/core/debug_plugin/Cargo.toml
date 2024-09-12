@@ -1,0 +1,11 @@
+[package]
+name = "debug_plugin"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+bevy = { version = "*", default-features = false, features = [
+  "bevy_text",          # Text/font rendering
+  "bevy_ui",            # UI toolkit
+]}
+shared_resource_plugin = { path = "../../shared_resource_plugin/"}
